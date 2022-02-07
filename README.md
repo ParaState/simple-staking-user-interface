@@ -38,7 +38,7 @@ git clone git@github.com:second-state/simple-staking-user-interface.git
 
 Paste the ABI **and the address** of the simple staking contract's successfully deployed contract instance, into the helper.js file
 
-## Contract address of ERC20 (NOT timelock)
+## Contract address of ERC20 contract (NOT staking contract)
 
 In addition to that, also paste the contract address of the **ERC20 contract** into the helper.js file. You will see the two addresses are clearly marked.
 

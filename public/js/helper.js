@@ -1,18 +1,22 @@
-const abi = [{
-        "inputs": [{
-            "internalType": "contract IERC20",
-            "name": "_erc20_contract_address",
-            "type": "address"
-        }],
+const abi = [
+    {
+        "inputs": [
+            {
+                "internalType": "contract IERC20",
+                "name": "_erc20_contract_address",
+                "type": "address"
+            }
+        ],
         "stateMutability": "nonpayable",
         "type": "constructor"
     },
     {
         "anonymous": false,
-        "inputs": [{
+        "inputs": [
+            {
                 "indexed": false,
                 "internalType": "address",
-                "name": "recipient",
+                "name": "to",
                 "type": "address"
             },
             {
@@ -22,12 +26,13 @@ const abi = [{
                 "type": "uint256"
             }
         ],
-        "name": "AllocationPerformed",
+        "name": "TokensUnstaked",
         "type": "event"
     },
     {
         "anonymous": false,
-        "inputs": [{
+        "inputs": [
+            {
                 "indexed": false,
                 "internalType": "address",
                 "name": "from",
@@ -40,210 +45,104 @@ const abi = [{
                 "type": "uint256"
             }
         ],
-        "name": "TokensDeposited",
+        "name": "tokensStaked",
         "type": "event"
     },
     {
-        "anonymous": false,
-        "inputs": [{
-                "indexed": false,
-                "internalType": "address",
-                "name": "recipient",
-                "type": "address"
-            },
+        "inputs": [
             {
-                "indexed": false,
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "alreadyWithdrawn",
+        "outputs": [
+            {
                 "internalType": "uint256",
-                "name": "amount",
+                "name": "",
                 "type": "uint256"
             }
         ],
-        "name": "TokensUnlocked",
-        "type": "event"
-    },
-    {
-        "inputs": [],
-        "name": "allIncomingDepositsFinalised",
-        "outputs": [{
-            "internalType": "bool",
-            "name": "",
-            "type": "bool"
-        }],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-        }],
-        "name": "alreadyWithdrawn",
-        "outputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-        }],
-        "name": "balances",
-        "outputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "address[]",
-                "name": "recipients",
-                "type": "address[]"
-            },
+        "inputs": [
             {
-                "internalType": "uint256[]",
-                "name": "amounts",
-                "type": "uint256[]"
+                "internalType": "address",
+                "name": "",
+                "type": "address"
             }
         ],
-        "name": "bulkDepositTokens",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "cliffEdge",
-        "outputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
+        "name": "balances",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [],
         "name": "contractBalance",
-        "outputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "address",
-                "name": "recipient",
-                "type": "address"
-            },
+        "outputs": [
             {
                 "internalType": "uint256",
-                "name": "amount",
+                "name": "",
                 "type": "uint256"
             }
         ],
-        "name": "depositTokens",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [],
         "name": "erc20Contract",
-        "outputs": [{
-            "internalType": "contract IERC20",
-            "name": "",
-            "type": "address"
-        }],
+        "outputs": [
+            {
+                "internalType": "contract IERC20",
+                "name": "",
+                "type": "address"
+            }
+        ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "finalizeAllIncomingDeposits",
-        "outputs": [],
-        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
         "inputs": [],
         "name": "initialTimestamp",
-        "outputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-        }],
-        "name": "mostRecentUnlockTimestamp",
-        "outputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "netReleasePeriod",
-        "outputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [],
         "name": "owner",
-        "outputs": [{
-            "internalType": "address payable",
-            "name": "",
-            "type": "address"
-        }],
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "releaseEdge",
-        "outputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "uint256",
-                "name": "_cliffTimePeriod",
-                "type": "uint256"
-            },
+        "inputs": [
             {
                 "internalType": "uint256",
-                "name": "_releaseTimePeriod",
+                "name": "_timePeriodInSeconds",
                 "type": "uint256"
             }
         ],
@@ -253,18 +152,52 @@ const abi = [{
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "internalType": "contract IERC20",
+                "name": "token",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "stakeTokens",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "inputs": [],
-        "name": "timestampSet",
-        "outputs": [{
-            "internalType": "bool",
-            "name": "",
-            "type": "bool"
-        }],
+        "name": "timePeriod",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [{
+        "inputs": [],
+        "name": "timestampSet",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "internalType": "contract IERC20",
                 "name": "token",
                 "type": "address"
@@ -281,14 +214,10 @@ const abi = [{
         "type": "function"
     },
     {
-        "inputs": [{
+        "inputs": [
+            {
                 "internalType": "contract IERC20",
                 "name": "token",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "to",
                 "type": "address"
             },
             {
@@ -297,35 +226,20 @@ const abi = [{
                 "type": "uint256"
             }
         ],
-        "name": "transferTimeLockedTokensAfterTimePeriod",
+        "name": "unstakeTokens",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-        }],
-        "name": "withdrawEth",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "stateMutability": "payable",
-        "type": "receive"
     }
 ];
 
 // Address of the linear timelock instance
-const linear_address = '0x5CDCCbA39ce998590C54455ED5BE930d920918a1';
+const staking_address = '0x3adbA9E6B5779A0B7B67B70B560B7C0605fecD8f';
 
 
 // IMPORTANT - which address are you pasting here?
 // THIS MUST BE THE ERC20 ADDRESS NOT THE TIMELOCK ADDRESS
-const erc20_contract_address = '0x23D91837fceE9b52D76e2BE18410D9b2522f681D';
+const erc20_contract_address = '0xdA4ec2913Cf480fE923FC7a734c727f8543d50f7';
 
 function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -430,7 +344,7 @@ class Amounts {
     }
 }
 
-var linearAmounts = new Amounts();
+var stakingAmounts = new Amounts();
 var provider;
 var signer;
 
@@ -446,7 +360,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 async function connectWallet() {
-    linearAmounts.reset();
+    stakingAmounts.reset();
     window.ethereum.enable();
     console.log('Called connect wallet which is inside helper.js');
     provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -466,7 +380,7 @@ function clearInput() {
 }
 
 async function updateBalances() {
-    linearAmounts.reset();
+    stakingAmounts.reset();
 
     window.ethereum.enable();
 
@@ -476,24 +390,24 @@ async function updateBalances() {
     var currentBlock = await provider.getBlock("latest");
     currentTime = currentBlock.timestamp;
     currentTimeBN = new ethers.BigNumber.from(currentTime);
-    linearAmounts.setCurrentTime(currentTimeBN);
-    console.log("Current time: " + linearAmounts.getCurrentTime());
+    stakingAmounts.setCurrentTime(currentTimeBN);
+    console.log("Current time: " + stakingAmounts.getCurrentTime());
 
-    // Instantiate linear timelock contract
-    linearTimeLockContract = new ethers.Contract(linear_address, abi, provider);
+    // Instantiate staking timelock contract
+    stakingTimeLockContract = new ethers.Contract(staking_address, abi, provider);
 
     // Cliff edge timestamp
-    cliffEdgeTimestamp = await linearTimeLockContract.cliffEdge();
+    cliffEdgeTimestamp = await stakingTimeLockContract.cliffEdge();
     cliffEdgeTimestampBN = new ethers.BigNumber.from(cliffEdgeTimestamp);
-    linearAmounts.setCliffEdge(cliffEdgeTimestampBN);
+    stakingAmounts.setCliffEdge(cliffEdgeTimestampBN);
 
     // Release edge timestamp
-    releaseEdgeTimestamp = await linearTimeLockContract.releaseEdge();
+    releaseEdgeTimestamp = await stakingTimeLockContract.releaseEdge();
     releaseEdgeTimestampBN = new ethers.BigNumber.from(releaseEdgeTimestamp);
-    linearAmounts.setReleaseEdge(releaseEdgeTimestampBN);
+    stakingAmounts.setReleaseEdge(releaseEdgeTimestampBN);
 
     // Net release period
-    linearAmounts.setNetReleasePeriod();
+    stakingAmounts.setNetReleasePeriod();
 
     // If we have not hit the unlock period then just send a message and end processing
     if (
@@ -532,59 +446,59 @@ async function updateBalances() {
         if (resultRegex != null) {
             var recipientAddress = resultRegex[0];
             // Balance locked 
-            linearUsersBalance = await linearTimeLockContract.balances(resultRegex[0]);
-            linearUsersBalanceBN = new ethers.BigNumber.from(linearUsersBalance);
-            linearAmounts.setLocked(linearUsersBalanceBN);
-            console.log("User's balance: " + linearAmounts.getLocked());
+            stakingUsersBalance = await stakingTimeLockContract.balances(resultRegex[0]);
+            stakingUsersBalanceBN = new ethers.BigNumber.from(stakingUsersBalance);
+            stakingAmounts.setLocked(stakingUsersBalanceBN);
+            console.log("User's balance: " + stakingAmounts.getLocked());
 
             // Amount already withdrawn
-            linearAlreadyWithdrawn = await linearTimeLockContract.alreadyWithdrawn(resultRegex[0]);
-            linearAlreadyWithdrawnBN = new ethers.BigNumber.from(linearAlreadyWithdrawn);
-            linearAmounts.setWithdrawn(linearAlreadyWithdrawnBN);
-            console.log("Already withdrawn: " + linearAmounts.getWithdrawn());
+            stakingAlreadyWithdrawn = await stakingTimeLockContract.alreadyWithdrawn(resultRegex[0]);
+            stakingAlreadyWithdrawnBN = new ethers.BigNumber.from(stakingAlreadyWithdrawn);
+            stakingAmounts.setWithdrawn(stakingAlreadyWithdrawnBN);
+            console.log("Already withdrawn: " + stakingAmounts.getWithdrawn());
 
             // Get most recent unlock timestamp i.e. the last time this specific user last unlocked tokens
-            mostRecentUnlockTimestamp = await linearTimeLockContract.mostRecentUnlockTimestamp(resultRegex[0]);
+            mostRecentUnlockTimestamp = await stakingTimeLockContract.mostRecentUnlockTimestamp(resultRegex[0]);
             mostRecentUnlockTimestampBN = new ethers.BigNumber.from(mostRecentUnlockTimestamp);
-            linearAmounts.setMostRecentUnlockTimestamp(mostRecentUnlockTimestampBN);
-            console.log("Time of most recent unlock: " + linearAmounts.getMostRecentUnlockTimestamp());
+            stakingAmounts.setMostRecentUnlockTimestamp(mostRecentUnlockTimestampBN);
+            console.log("Time of most recent unlock: " + stakingAmounts.getMostRecentUnlockTimestamp());
 
             // Populate UI with values
             console.log("Adding start:");
-            console.log(linearAmounts.getLocked());
+            console.log(stakingAmounts.getLocked());
             console.log("Adding end.");
 
-            if (ethers.utils.formatEther(linearAmounts.getLocked()) < 1 && ethers.utils.formatEther(linearAmounts.getLocked()) > 0) {
+            if (ethers.utils.formatEther(stakingAmounts.getLocked()) < 1 && ethers.utils.formatEther(stakingAmounts.getLocked()) > 0) {
                 document.getElementById("locked").innerHTML = "< 1";
             } else {
-                document.getElementById("locked").innerHTML = ethers.utils.formatEther(linearAmounts.getLocked());
+                document.getElementById("locked").innerHTML = ethers.utils.formatEther(stakingAmounts.getLocked());
             }
 
-            if (ethers.utils.formatEther(linearAmounts.getWithdrawn()) < 1 && ethers.utils.formatEther(linearAmounts.getWithdrawn()) > 0) {
+            if (ethers.utils.formatEther(stakingAmounts.getWithdrawn()) < 1 && ethers.utils.formatEther(stakingAmounts.getWithdrawn()) > 0) {
                 document.getElementById("withdrawn").innerHTML = "< 1";
             } else {
-                document.getElementById("withdrawn").innerHTML = ethers.utils.formatEther(linearAmounts.getWithdrawn());
+                document.getElementById("withdrawn").innerHTML = ethers.utils.formatEther(stakingAmounts.getWithdrawn());
             }
             // Calculate how many wei per second is available for this specific user
-            linearAmounts.setWeiPerSecond((linearAmounts.getLocked().add(linearAmounts.getWithdrawn())).div(linearAmounts.getNetReleasePeriod()));
-            console.log("Wei per second: " + linearAmounts.getWeiPerSecond());
+            stakingAmounts.setWeiPerSecond((stakingAmounts.getLocked().add(stakingAmounts.getWithdrawn())).div(stakingAmounts.getNetReleasePeriod()));
+            console.log("Wei per second: " + stakingAmounts.getWeiPerSecond());
 
             // Calculate how many tokens are available, given the current time period and how much time has elapsed so far        
-            if (linearAmounts.getCurrentTime() >= linearAmounts.getReleaseEdge()) {
+            if (stakingAmounts.getCurrentTime() >= stakingAmounts.getReleaseEdge()) {
                 // The maximum time period has passed, so all locked tokens are available now and forever
-                linearAmounts.setAvailable(linearAmounts.getLocked());
+                stakingAmounts.setAvailable(stakingAmounts.getLocked());
                 console.log("No time lock in place, all tokens are available");
             } else {
-                linearAmounts.setAvailable((linearAmounts.getCurrentTime().sub(linearAmounts.getMostRecentUnlockTimestamp())).mul(linearAmounts.getWeiPerSecond()));
+                stakingAmounts.setAvailable((stakingAmounts.getCurrentTime().sub(stakingAmounts.getMostRecentUnlockTimestamp())).mul(stakingAmounts.getWeiPerSecond()));
             }
-            if (ethers.utils.formatEther(linearAmounts.getAvailable()) < 1 && ethers.utils.formatEther(linearAmounts.getAvailable()) > 0) {
+            if (ethers.utils.formatEther(stakingAmounts.getAvailable()) < 1 && ethers.utils.formatEther(stakingAmounts.getAvailable()) > 0) {
                 document.getElementById("available").innerHTML = "< 1";
             } else {
-                document.getElementById("available").innerHTML = ethers.utils.formatEther(linearAmounts.getAvailable());
+                document.getElementById("available").innerHTML = ethers.utils.formatEther(stakingAmounts.getAvailable());
             }
             // Print value which will be written to state_amount input box
             //console.log("Max available: " + ethers.utils.formatUnits(available).toString());
-            document.getElementById("state_amount").value = ethers.utils.formatUnits(linearAmounts.getAvailable(), 0);
+            document.getElementById("state_amount").value = ethers.utils.formatUnits(stakingAmounts.getAvailable(), 0);
             document.getElementById("pb").style.transition = "all 0.1s linear 0s";
             document.getElementById("pb").style.width = '100%';
             sleep(1000).then(() => {
@@ -613,12 +527,12 @@ async function updateBalances() {
 }
 
 async function calculateBalances() {
-    linearAmounts.reset();
+    stakingAmounts.reset();
     await updateBalances();
 }
 
 async function onButtonClickTransfer() {
-    linearAmounts.reset();
+    stakingAmounts.reset();
     await updateBalances();
     // Provider
     window.ethereum.enable()
@@ -629,7 +543,7 @@ async function onButtonClickTransfer() {
     console.log(signer);
 
     // Instantiate all 3 timelock contracts
-    linearTimeLockContract = new ethers.Contract(linear_address, abi, signer);
+    stakingTimeLockContract = new ethers.Contract(staking_address, abi, signer);
 
     // UI mods
     document.getElementById("pb").style.width = '0%';
@@ -680,13 +594,13 @@ async function onButtonClickTransfer() {
         });
         throw "exit";
     }
-    if (stateAmountInWei > 0 && stateAmountInWei <= linearAmounts.getAvailable()) {
+    if (stateAmountInWei > 0 && stateAmountInWei <= stakingAmounts.getAvailable()) {
         eth_address = document.getElementById('eth_address').value;
         var pattern = /0x[a-fA-F0-9]{40}/;
         var resultRegex = pattern.exec(eth_address);
         if (resultRegex != null) {
             var recipientAddress = resultRegex[0];
-            response = await linearTimeLockContract.transferTimeLockedTokensAfterTimePeriod(erc20_contract_address, recipientAddress, stateAmountInWei);
+            response = await stakingTimeLockContract.transferTimeLockedTokensAfterTimePeriod(erc20_contract_address, recipientAddress, stateAmountInWei);
             var toastResponse = JSON.stringify({
                 avatar: "../images/favicon.ico",
                 text: "Congratulations, tokens unlocked!",
