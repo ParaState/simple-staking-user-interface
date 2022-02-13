@@ -38,37 +38,37 @@
             <thead>
               <tr>
                 <th scope="col">Locked</th>
-                <th scope="col">Withdrawn</th>
-                <th scope="col">Available</th>
+                <th scope="col">Unlocked</th>
+                <th scope="col">Unlockable</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td id="locked">0</td>
-                <td id="withdrawn">0</td>
-                <td id="available">0</td>
+                <td id="unlocked">0</td>
+                <td id="unlockable">0</td>
               </tr>
             </tbody>
           </table>
           <hr>
-          <div class="Details" id="staking_text"><b>Staking and Unstaking</b></div>
+          <div class="Details" id="staking_text"><b>Locking and Unlocking</b></div>
           <div class="container">
             <div class="row">
               <div class="col-sm">
-                <input class="full_width small" id="amount_to_state" type="text" value="Amount to stake">
+                <input class="full_width small" id="amount_to_lock" type="text" value="Amount to lock">
               </div>
               <div class="col-sm">
-                <input class="full_width small" id="amount_to_unstake" type="text" value="Amount to unstake">
+                <input class="full_width small" id="amount_to_unlock" type="text" value="Amount to unlock">
               </div>
             </div>
           <br>
           <div class="container">
             <div class="row">
               <div class="col-sm">
-                          <button class="NavButton center" id="button_stake_tokens" onclick="stakeTokens($('#eth_address').val())">Stake Tokens</button>
+                          <button class="NavButton center" id="button_lock_tokens" onclick="onButtonClickLock($('#eth_address').val())">Lock Tokens</button>
               </div>
               <div class="col-sm">
-                         <button class="NavButton center" id="button_stake_tokens" onclick="stakeTokens($('#eth_address').val())">Unstake Tokens</button>
+                         <button class="NavButton center" id="button_unlock_tokens" onclick="onButtonClickUnLock($('#eth_address').val())">Unlock Tokens</button>
               </div>
             </div>
             <br>
