@@ -531,6 +531,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
             console.log("Ready to unlock tokens ...")
         });
     });
+    jQuery('.hover-tipso-tooltip').tipso({
+    tooltipHover: true
+});
 });
 
 async function connectWallet() {
@@ -541,11 +544,31 @@ async function connectWallet() {
     console.log(provider);
     signer = provider.getSigner();
     console.log(signer);
-    var addressOfSigner = await signer.getAddress();
+    var addressOfSigner;
+    try {
+    addressOfSigner = await signer.getAddress();
+    } catch (err){
+        var toastResponse = JSON.stringify({
+            avatar: "../images/favicon.ico",
+            text: "Please open & sign in to your wallet software first",
+            duration: 10000,
+            newWindow: true,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            backgroundColor: "linear-gradient(to right, #FF6600, #FFA500)",
+            stopOnFocus: false, // Prevents dismissing of toast on hover
+            onClick: function() {} // Callback after click
+        });
+        var toastObject = JSON.parse(toastResponse);
+        Toastify(toastObject).showToast();
+    }
+    if (addressOfSigner){
+    console.log("Address of signer: " + addressOfSigner);
     document.getElementById("eth_address").value = addressOfSigner;
     document.getElementById("connect_wallet_text").style.color = "#00FF7F";
     document.getElementById("connect_wallet_text").innerHTML = "Wallet connected ✔";
-
+    }
 }
 
 function clearInput() {
@@ -576,8 +599,7 @@ async function updateBalances() {
     console.log("Current time: " + stakingAmounts.getCurrentTime());
 
     // Instantiate staking timelock contract
-    stakingTimeLockContract = new ethers.Contract(staking_address, abi, provider);
-
+    stakingTimeLockContract = await new ethers.Contract(staking_address, abi, provider);
     // Instantiate ERC20 contract
     erc20TimeLockContract = new ethers.Contract(erc20_contract_address, erc20_abi, provider);
 
@@ -588,7 +610,7 @@ async function updateBalances() {
 
     // If we have not hit the unlock period then just send a message and end processing
     if (
-        currentTime < timePeriodTimestamp) {
+        stakingAmounts.getCurrentTime().lt(stakingAmounts.getTimePeriod())) {
         console.log("No tokens unlockable yet");
         var unlockCommences = new Date(timePeriodTimestamp * 1000);
         var toastResponse = JSON.stringify({
@@ -635,14 +657,14 @@ async function updateBalances() {
             console.log("Already unlocked: " + stakingAmounts.getUnlocked());
 
             // Populate UI with values
-            if (ethers.utils.formatEther(stakingAmounts.getLocked()) < 1 && ethers.utils.formatEther(stakingAmounts.getLocked()) > 0) {
-                document.getElementById("locked").innerHTML = "< 1";
+            if (ethers.utils.formatEther(stakingAmounts.getLocked()) < 0.1 && ethers.utils.formatEther(stakingAmounts.getLocked()) > 0) {
+                document.getElementById("locked").innerHTML = "< 0.1";
             } else {
                 document.getElementById("locked").innerHTML = ethers.utils.formatEther(stakingAmounts.getLocked());
             }
 
-            if (ethers.utils.formatEther(stakingAmounts.getUnlocked()) < 1 && ethers.utils.formatEther(stakingAmounts.getUnlocked()) > 0) {
-                document.getElementById("unlocked").innerHTML = "< 1";
+            if (ethers.utils.formatEther(stakingAmounts.getUnlocked()) < 0.1 && ethers.utils.formatEther(stakingAmounts.getUnlocked()) > 0) {
+                document.getElementById("unlocked").innerHTML = "< 0.1";
             } else {
                 document.getElementById("unlocked").innerHTML = ethers.utils.formatEther(stakingAmounts.getUnlocked());
             }
@@ -654,15 +676,11 @@ async function updateBalances() {
             } else {
                 stakingAmounts.setUnlockable("0");
             }
-            if (ethers.utils.formatEther(stakingAmounts.getUnlockable()) < 1 && ethers.utils.formatEther(stakingAmounts.getUnlockable()) > 0) {
-                document.getElementById("unlockable").innerHTML = "< 1";
+            if (ethers.utils.formatEther(stakingAmounts.getUnlockable()) < 0.1 && ethers.utils.formatEther(stakingAmounts.getUnlockable()) > 0) {
+                document.getElementById("unlockable").innerHTML = "< 0.1";
             } else {
                 document.getElementById("unlockable").innerHTML = ethers.utils.formatEther(stakingAmounts.getUnlockable());
             }
-            // The amount of tokens which have previously locked, but are now available to be unlocked
-            //document.getElementById("amount_to_unlock").value = ethers.utils.formatUnits(stakingAmounts.getUnlockable(), 0);
-            // The amount of tokens that this user can potentially lock up if they want to
-            //document.getElementById("amount_to_lock").value = ethers.utils.formatUnits(erc20BalanceBN, 0);
             document.getElementById("pb").style.transition = "all 0.1s linear 0s";
             document.getElementById("pb").style.width = '100%';
             sleep(1000).then(() => {
@@ -727,7 +745,7 @@ async function onButtonClickLock() {
     var toastResponse;
 
     // Amount to unlock
-    state_amount = document.getElementById('amount_to_lock').value;
+    state_amount = document.getElementById('amount').value;
 
     // Ensure that state amount is a real number, if not then we skip everything and send a toast message 
     try {
@@ -901,7 +919,7 @@ async function onButtonClickUnLock() {
     var toastResponse;
 
     // Amount to unlock
-    state_amount = document.getElementById('amount_to_unlock').value;
+    state_amount = document.getElementById('amount').value;
 
     // Ensure that state amount is a real number, if not then we skip everything and send a toast message 
     try {
