@@ -1157,21 +1157,54 @@ async function onButtonClickUnLock() {
             // Check to see if user has enough tokens to unstake
             if (stateAmountInWei.lte(ethers.utils.formatUnits(stakingAmounts.getUnlockable(), 0))) {
                 // Now we can go ahead and unstake the tokens
-                stakingResponse1 = await stakingTimeLockContract.unstakeTokens(erc20_contract_address, stateAmountInWei);
-                var toastResponse = JSON.stringify({
-                    avatar: "../images/favicon.ico",
-                    text: "Congratulations, tokens un-locked!",
-                    duration: 10000,
-                    newWindow: true,
-                    close: true,
-                    gravity: "top", // `top` or `bottom`
-                    position: "right", // `left`, `center` or `right`
-                    backgroundColor: "linear-gradient(to right, #454A21, #607D3B)",
-                    stopOnFocus: false, // Prevents dismissing of toast on hover
-                    onClick: function() {} // Callback after click
+                stakingTimeLockContract.unstakeTokens(erc20_contract_address, stateAmountInWei).then((unlockResponse) => {
+                    unlockResponse.wait().then((unlockResponse01) => {
+
+                    var toastResponse = JSON.stringify({
+                        avatar: "../images/favicon.ico",
+                        text: "Congratulations, tokens un-locked!",
+                        duration: 10000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        backgroundColor: "linear-gradient(to right, #454A21, #607D3B)",
+                        stopOnFocus: false, // Prevents dismissing of toast on hover
+                        onClick: function() {} // Callback after click
+                    });
+                    var toastObject = JSON.parse(toastResponse);
+                    Toastify(toastObject).showToast();
+                    // Automatically update balances
+                    stakingAmounts.reset();
+                    var toastResponseStake = JSON.stringify({
+                        avatar: "../images/favicon.ico",
+                        text: "Refreshing balances, please wait ...",
+                        duration: 10000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "left", // `left`, `center` or `right`
+                        backgroundColor: "linear-gradient(to right, #green, #607D3B)",
+                        stopOnFocus: false, // Prevents dismissing of toast on hover
+                        onClick: function() {} // Callback after click
+                    });
+                    var toastObject = JSON.parse(toastResponseStake);
+                    Toastify(toastObject).showToast();
+                    // UI mods
+                    document.getElementById("pb").style.width = '0%';
+                    console.log("Disabling button");
+                    document.getElementById("button_calculate_balances").disabled = true;
+                    document.getElementById("button_lock_tokens").disabled = true;
+                    document.getElementById("button_unlock_tokens").disabled = true;
+                    document.getElementById("pb").style.transition = "all 30s linear 0s";
+                    document.getElementById("pb").style.width = '80%';
+                        sleep(1500).then(() => {
+                            updateBalances().then((updateBalancesResponse) => {
+                                console.log("Balances updated.");
+                            });
+                        });
+                    });
                 });
-                var toastObject = JSON.parse(toastResponse);
-                Toastify(toastObject).showToast();
             } else {
                 var toastResponse = JSON.stringify({
                     avatar: "../images/favicon.ico",
