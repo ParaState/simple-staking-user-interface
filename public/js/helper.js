@@ -651,10 +651,10 @@ async function updateBalances() {
             console.log("User's balance: " + stakingAmounts.getLocked());
 
             // Amount already unlocked
-            stakingAlreadyUnlocked = await stakingTimeLockContract.alreadyWithdrawn(resultRegex[0]);
-            stakingAlreadyUnlockedBN = new ethers.BigNumber.from(stakingAlreadyUnlocked);
-            stakingAmounts.setUnlocked(stakingAlreadyUnlockedBN);
-            console.log("Already unlocked: " + stakingAmounts.getUnlocked());
+            //stakingAlreadyUnlocked = await stakingTimeLockContract.alreadyWithdrawn(resultRegex[0]);
+            //stakingAlreadyUnlockedBN = new ethers.BigNumber.from(stakingAlreadyUnlocked);
+            //stakingAmounts.setUnlocked(stakingAlreadyUnlockedBN);
+            //console.log("Already unlocked: " + stakingAmounts.getUnlocked());
 
             // Populate UI with values
             if (ethers.utils.formatEther(stakingAmounts.getLocked()) < 0.1 && ethers.utils.formatEther(stakingAmounts.getLocked()) > 0) {
@@ -662,12 +662,13 @@ async function updateBalances() {
             } else {
                 document.getElementById("locked").innerHTML = ethers.utils.formatEther(stakingAmounts.getLocked());
             }
+            // We don't really need to know how many the user has already unlocked - so this section is commented out for now
+            //if (ethers.utils.formatEther(stakingAmounts.getUnlocked()) < 0.1 && ethers.utils.formatEther(stakingAmounts.getUnlocked()) > 0) {
+            //    document.getElementById("unlocked").innerHTML = "< 0.1";
+            //} else {
+            //    document.getElementById("unlocked").innerHTML = ethers.utils.formatEther(stakingAmounts.getUnlocked());
+            //}
 
-            if (ethers.utils.formatEther(stakingAmounts.getUnlocked()) < 0.1 && ethers.utils.formatEther(stakingAmounts.getUnlocked()) > 0) {
-                document.getElementById("unlocked").innerHTML = "< 0.1";
-            } else {
-                document.getElementById("unlocked").innerHTML = ethers.utils.formatEther(stakingAmounts.getUnlocked());
-            }
             // Calculate how many tokens are unlockable, given the current time period and how much time has elapsed so far        
             if (stakingAmounts.getCurrentTime().gte(stakingAmounts.getTimePeriod())) {
                 // The maximum time period has passed, so all locked tokens are unlockable now and forever
@@ -806,15 +807,89 @@ async function onButtonClickLock() {
                 erc20ApprovalBalanceBN = new ethers.BigNumber.from(erc20ApprovalBalance);
 
                 // Set approval to zero first (in the event that we need to increase the approved amount for this upcoming transaction)
-                if (erc20ApprovalBalanceBN.lt(stateAmountInWei)) {
+                // First create a zero BN
+                erc20ZeroValueBN = new ethers.BigNumber.from("0");
+                if (erc20ApprovalBalanceBN.eq(erc20ZeroValueBN)) {
+                    var toastResponseApprove = JSON.stringify({
+                        avatar: "../images/favicon.ico",
+                        text: "Staking contract approval is required, please approve.",
+                        duration: 10000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        backgroundColor: "linear-gradient(to right, #454A21, #607D3B)",
+                        stopOnFocus: false, // Prevents dismissing of toast on hover
+                        onClick: function() {} // Callback after click
+                    });
+                    var toastObject = JSON.parse(toastResponseApprove);
+                    Toastify(toastObject).showToast();
+                    erc20TimeLockContract.approve(staking_address, stateAmountInWei).then((approveResponse0) => {
+                        // Wait for transaction to complete
+                        console.log("Waiting for receipt in relation to setting approval from zero to " + stateAmountInWei);
+                        console.log(approveResponse0);
+                        console.log("Receipt delivered!");
+                        console.log("Waiting for transaction to be confirmed ...");
+                        approveResponse0.wait().then((approveResponse01) => {
+                            console.log("Confirmed!!!");
+                            // Now go ahead and stake the tokens
+                            console.log("Locking tokens, please wait ...");
+                            stakingTimeLockContract.stakeTokens(erc20_contract_address, stateAmountInWei).then((approveResponse02) => {
+                                var toastResponse = JSON.stringify({
+                                    avatar: "../images/favicon.ico",
+                                    text: "Congratulations, tokens locked!",
+                                    duration: 10000,
+                                    newWindow: true,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    backgroundColor: "linear-gradient(to right, #454A21, #607D3B)",
+                                    stopOnFocus: false, // Prevents dismissing of toast on hover
+                                    onClick: function() {} // Callback after click
+                                });
+                                var toastObject = JSON.parse(toastResponse);
+                                Toastify(toastObject).showToast();
+                                console.log("Locking success");
+                            });
+                        });
+                    });
+
+                } else if (erc20ApprovalBalanceBN.gt(erc20ZeroValueBN) && erc20ApprovalBalanceBN.lt(stateAmountInWei)) {
                     // Setting approval to zero before increasing
-                    erc20ZeroValueBN = new ethers.BigNumber.from("0");
+                    var toastResponseApprove2 = JSON.stringify({
+                        avatar: "../images/favicon.ico",
+                        text: "Setting approval to zero first, this might take a minute ...",
+                        duration: 10000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        backgroundColor: "linear-gradient(to right, #454A21, #607D3B)",
+                        stopOnFocus: false, // Prevents dismissing of toast on hover
+                        onClick: function() {} // Callback after click
+                    });
+                    var toastObject = JSON.parse(toastResponseApprove2);
+                    Toastify(toastObject).showToast();
                     approveResponse1 = await erc20TimeLockContract.approve(staking_address, erc20ZeroValueBN);
                     // Now we can go ahead and set the approval amount to the correct amount for this specific transaction
+                    var toastResponseApprove3 = JSON.stringify({
+                        avatar: "../images/favicon.ico",
+                        text: "Setting approval to " + stateAmountInWei + " please approve",
+                        duration: 10000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        backgroundColor: "linear-gradient(to right, #454A21, #607D3B)",
+                        stopOnFocus: false, // Prevents dismissing of toast on hover
+                        onClick: function() {} // Callback after click
+                    });
+                    var toastObject = JSON.parse(toastResponseApprove3);
+                    Toastify(toastObject).showToast();
                     approveResponse2 = await erc20TimeLockContract.approve(staking_address, stateAmountInWei);
                 }
                 // Now go ahead and stake the tokens
-                stakingResponse1 = await stakingTimeLockContract.stakeTokens(erc20_contract_address, stateAmountInWei);
+/*                stakingResponse1 = await stakingTimeLockContract.stakeTokens(erc20_contract_address, stateAmountInWei);
                 var toastResponse = JSON.stringify({
                     avatar: "../images/favicon.ico",
                     text: "Congratulations, tokens locked!",
@@ -828,7 +903,7 @@ async function onButtonClickLock() {
                     onClick: function() {} // Callback after click
                 });
                 var toastObject = JSON.parse(toastResponse);
-                Toastify(toastObject).showToast();
+                Toastify(toastObject).showToast();*/
             } else {
                 var toastResponse = JSON.stringify({
                     avatar: "../images/favicon.ico",
