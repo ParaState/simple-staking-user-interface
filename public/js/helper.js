@@ -1167,8 +1167,8 @@ async function onButtonClickUnLock() {
                         newWindow: true,
                         close: true,
                         gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        backgroundColor: "linear-gradient(to right, #454A21, #607D3B)",
+                        position: "left", // `left`, `center` or `right`
+                        backgroundColor: "linear-gradient(to right, #green, #607D3B)",
                         stopOnFocus: false, // Prevents dismissing of toast on hover
                         onClick: function() {} // Callback after click
                     });
