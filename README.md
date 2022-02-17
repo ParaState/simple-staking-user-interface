@@ -40,7 +40,7 @@ Paste the ABI **and the address** of the simple staking contract's successfully 
 
 ## Contract address of ERC20 contract (NOT staking contract)
 
-In addition to that, also paste the contract address of the **ERC20 contract** into the helper.js file. You will see the two addresses are clearly marked.
+In addition to that, also paste the contract address and ABI of the **ERC20 contract** into the helper.js file. You will see the two addresses are clearly marked.
 
 ## Installing
 
@@ -58,4 +58,4 @@ To publish/deploy simply type
 npm run deploy
 ```
 
-The site will then be hosted to [https://second-state.github.io/linear-timelock-user-interface/html/](https://second-state.github.io/linear-timelock-token-user-interface/html/)
+The site will then be hosted to [https://second-state.github.io/simple-staking-user-interface/html/](https://second-state.github.io/linear-timelock-token-user-interface/html/)
